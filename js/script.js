@@ -115,10 +115,10 @@ function createEverything() {
   const keyboard = document.createElement('div');
   keyboard.classList.add('keyboard');
   mainSection.append(keyboard);
-  const textP=document.createElement("p");
-  textP.innerText="Created on Windows, language change is Ctrl+Alt";
+  const textP = document.createElement('p');
+  textP.innerText = 'Created on Windows, language change is Ctrl+Alt';
+  textP.classList.add('text-p');
   mainSection.append(textP);
-  textP.classList.add("text-p");
   let index = 0;
   for (let i = 0; i < 5; i += 1) {
     const keyboardRow = document.createElement('div');

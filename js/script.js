@@ -1,5 +1,8 @@
 /* eslint linebreak-style: ['error', 'windows'] */
+/* eslint no-param-reassign: "off" */
+
 const englishButtons = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter', 'LShift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
+const englishButtonsShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'LShift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
 const keyNames = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 function fillKeyboard(buttonsArray) {
   let index = 0;
@@ -56,69 +59,50 @@ function createEverything() {
 
 createEverything();
 
-function typeKey(eventKey, textarea) {
-  const cursorPos = getCursorPos(textarea);
-  console.log(cursorPos);
-  const textareaValue = textarea.value;
-  let output;
-  if (cursorPos.start != undefined) {
-    output = [textareaValue.slice(0, cursorPos.start), eventKey, textareaValue.slice(cursorPos.start)].join('');
-    textarea.value = output;
-    setCursorPos(textarea, cursorPos.start+1, cursorPos.end+1);
-  }
-  else {
-    textarea.value += eventKey;
-  }
-}
 function getCursorPos(input) {
-  if ("selectionStart" in input && document.activeElement == input) {
+  if ('selectionStart' in input && document.activeElement === input) {
     return {
       start: input.selectionStart,
-      end: input.selectionEnd
+      end: input.selectionEnd,
     };
-  }
-  else if (input.createTextRange) {
-  let sel = document.selection.createRange();
-    if (sel.parentElement() === input) {
-      let rng = input.createTextRange();
-      rng.moveToBookmark(sel.getBookmark());
-      for (var len = 0; rng.compareEndPoints("EndToStart", rng) > 0; rng.moveEnd("character", -1)) {
-        len++;
-      }
-      rng.setEndPoint("StartToStart", input.createTextRange());
-      for (let pos = { start: 0, end: len };  rng.compareEndPoints("EndToStart", rng) > 0; rng.moveEnd("character", -1)) {
-      pos.start++;
-      pos.end++;
-      }
-      return pos;
-    }
   }
   return -1;
 }
 function setCursorPos(input, start, end) {
-    if (arguments.length < 3) end = start;
-    if ("selectionStart" in input) {
-        setTimeout(function() {
-            input.selectionStart = start;
-            input.selectionEnd = end;
-        }, 1);
-    }
-    else if (input.createTextRange) {
-        var rng = input.createTextRange();
-        rng.moveStart("character", start);
-        rng.collapse();
-        rng.moveEnd("character", end - start);
-        rng.select();
-    }
+  if (arguments.length < 3) end = start;
+  if ('selectionStart' in input) {
+    setTimeout(() => {
+      input.selectionStart = start;
+      input.selectionEnd = end;
+    }, 1);
+  } else if (input.createTextRange) {
+    const rng = input.createTextRange();
+    rng.moveStart('character', start);
+    rng.collapse();
+    rng.moveEnd('character', end - start);
+    rng.select();
+  }
+}
+function typeKey(eventKey, textarea) {
+  const cursorPos = getCursorPos(textarea);
+  const textareaValue = textarea.value;
+  let output;
+  if (cursorPos.start !== undefined) {
+    output = [textareaValue.slice(0, cursorPos.start), eventKey, textareaValue.slice(cursorPos.start)].join('');
+    textarea.value = output;
+    setCursorPos(textarea, cursorPos.start + 1, cursorPos.end + 1);
+  } else {
+    textarea.value += eventKey;
+  }
 }
 document.addEventListener('keydown', (event) => {
   const keyboardKey = document.querySelector(`.${event.code}`);
-  if (keyboardKey) {  
-      // console.log(event);
+  if (keyboardKey) {
+    // console.log(event);
     keyboardKey.classList.add('hover');
-    setTimeout(() => {
-      keyboardKey.classList.remove('hover');
-    }, 500);
+    // setTimeout(() => {
+    //   keyboardKey.classList.remove('hover');
+    // }, 500);
     const textArea = document.querySelector('.textarea');
     if (document.activeElement === textArea) {
       event.preventDefault();
@@ -141,6 +125,33 @@ document.addEventListener('keydown', (event) => {
           typeKey(event.key, textArea);
           break;
       }
+    } else {
+      console.log(event.code);
+      switch (event.code) {
+        case 'Space':
+          typeKey(' ', textArea);
+          break;
+        case 'Enter':
+          typeKey('\n', textArea);
+          break;
+        case 'ShiftRight':
+        case 'ShiftLeft':
+          fillKeyboard(englishButtonsShift);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+});
+document.addEventListener('keyup', (event) => {
+  const keyboardKey = document.querySelector(`.${event.code}`);
+  if (keyboardKey) {
+    if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+      fillKeyboard(englishButtons);
+      keyboardKey.classList.remove('hover');
+    } else {
+      keyboardKey.classList.remove('hover');
     }
   }
 });

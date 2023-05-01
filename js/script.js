@@ -4,8 +4,27 @@
 const englishButtons = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter', 'LShift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
 const englishButtonsShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'LShift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
 const englishButtonsCaps = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'LShift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
+const russianButtons = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'LShift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
+const russianButtonsShift = ['Ё', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'LShift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
+const russianButtonsCaps = ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'LShift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', '↑', 'RShift', 'LCtrl', 'Win', 'LAlt', 'Space', 'RAlt', '←', '↓', '→', 'RCtrl'];
 const keyNames = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 let isCapslock = false;
+let isEnglish;
+function checkLocalStorage() {
+  let lang = localStorage.getItem('lang');
+  if (lang){
+    if (lang === 'en') {
+      isEnglish = true;
+    } else {
+      isEnglish = false;
+    }
+  } else {
+    isEnglish=true;
+    localStorage.setItem('lang','en');
+
+  }
+  console.log(isEnglish);
+}
 function fillKeyboard(buttonsArray) {
   let index = 0;
   const allButtons = document.querySelectorAll('.button');
@@ -53,10 +72,19 @@ function createEverything() {
       if (englishButtons[index] === 'Backspace' || englishButtons[index] === 'Del' || englishButtons[index] === 'Enter' || englishButtons[index] === 'RShift' || englishButtons[index] === 'RCtrl') {
         lastKey = true;
       }
+      switch(englishButtons[index])
+      {
+        
+      }
       index += 1;
     }
   }
-  fillKeyboard(englishButtons);
+  checkLocalStorage();
+  if(isEnglish) {
+    fillKeyboard(englishButtons);
+  } else {
+    fillKeyboard(russianButtons);
+  }
 }
 
 createEverything();
@@ -107,7 +135,12 @@ function deleteKey(textarea, isDelete) {
         output = [textareaValue.slice(0, cursorPos.start), textareaValue.slice(cursorPos.start + 1)].join('');
         textarea.value = output;
         setCursorPos(textarea, cursorPos.start, cursorPos.end);
+      } else {
+        output = [textareaValue.slice(1)].join('');
+        textarea.value = output;
+        setCursorPos(textarea, cursorPos.start, cursorPos.end);
       }
+
     } else {
       output = [textareaValue.slice(0, cursorPos.start - 1), textareaValue.slice(cursorPos.start)].join('');
       textarea.value = output;
@@ -117,10 +150,26 @@ function deleteKey(textarea, isDelete) {
     textarea.value = textarea.value.slice(0, -1);
   }
 }
+function switchLanguage() {
+  isEnglish = !isEnglish;
+  if(isEnglish)
+  {
+    localStorage.setItem('lang', 'en');
+  } else {
+    localStorage.setItem('lang', 'ru');
+  }
+  if (isEnglish) {
+    fillKeyboard(englishButtons);
+  } else {
+    fillKeyboard(russianButtons);
+  }
+}
 document.addEventListener('keydown', (event) => {
   const keyboardKey = document.querySelector(`.${event.code}`);
   if (keyboardKey) {
     keyboardKey.classList.add('hover');
+    console.log(keyboardKey);
+    let key=keyboardKey.querySelector('span').innerText;
     const textArea = document.querySelector('.textarea');
     if (document.activeElement === textArea) {
       event.preventDefault();
@@ -140,7 +189,7 @@ document.addEventListener('keydown', (event) => {
           typeKey('↑', textArea);
           break;
         default:
-          typeKey(event.key, textArea);
+          typeKey(key, textArea);
           break;
       }
     } else {
@@ -162,7 +211,21 @@ document.addEventListener('keydown', (event) => {
           break;
         case 'ShiftRight':
         case 'ShiftLeft':
-          fillKeyboard(englishButtonsShift);
+          if (isEnglish) {
+            fillKeyboard(englishButtonsShift);
+          } else {
+            fillKeyboard(russianButtonsShift);
+          }
+          break;
+        case 'AltLeft':
+          if (event.ctrlKey) {
+            switchLanguage();
+          }
+          break;
+        case 'ControlLeft':
+          if (event.altKey) {
+            switchLanguage();
+          }
           break;
         default:
           break;
@@ -175,16 +238,28 @@ document.addEventListener('keyup', (event) => {
   if (keyboardKey) {
     if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
       if (isCapslock) {
-        fillKeyboard(englishButtonsCaps);
-      } else {
+        if (isEnglish) {
+          fillKeyboard(englishButtonsCaps);
+        } else {
+          fillKeyboard(russianButtonsCaps);
+        }
+      } else if (isEnglish) {
         fillKeyboard(englishButtons);
+      } else {
+        fillKeyboard(russianButtons);
       }
     } else if (event.code === 'CapsLock') {
       isCapslock = !isCapslock;
       if (isCapslock) {
-        fillKeyboard(englishButtonsCaps);
-      } else {
+        if (isEnglish) {
+          fillKeyboard(englishButtonsCaps);
+        } else {
+          fillKeyboard(russianButtonsCaps);
+        }
+      } else if (isEnglish) {
         fillKeyboard(englishButtons);
+      } else {
+        fillKeyboard(russianButtons);
       }
     }
     keyboardKey.classList.remove('hover');
